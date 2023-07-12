@@ -1,10 +1,12 @@
 import './CheeseButton.css';
+import { useDispatch } from 'react-redux';
+import { cheeseActions } from '../store/index';
 import { useState } from 'react';
 
 const CheeseButton = () => {
-  const [availableTickleCell, setAvailableTickleCell] = useState(false);
+  const dispatch = useDispatch();
   const CheeseButtonHandler = () => {
-    setAvailableTickleCell(!availableTickleCell);
+    dispatch(cheeseActions.toggle());
   }
   return (
     <button className ="cheese-button" onClick={CheeseButtonHandler}>🧀</button>
