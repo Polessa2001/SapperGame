@@ -1,0 +1,44 @@
+.playcell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid whitesmoke;
+  display: flex;
+  font-size: 1.875rem;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 600px) {
+  .playcell {
+    width: 24px;
+    height: 24px;
+    border: 1px solid whitesmoke;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.cell-clicked {
+  background: rgb(112, 110, 110);
+}
+.x1 {
+  color: blue;
+}
+.x2 {
+  color: green;
+}
+.x3 {
+  color: red;
+}
+.x4 {
+  color: rgb(166, 0, 255);
+}
+.x5 {
+  color: rgb(255, 242, 0);
+}
+.x6 {
+  color: rgb(66, 171, 144);
+}
+.x7 {
+  color: rgb(0, 0, 0);
+}

@@ -1,0 +1,21 @@
+.playground {
+  width: 410px;
+  height: 410px;
+  border: 10px solid darkgray;
+  background-color: lightgray;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 600px) {
+  .playground {
+    width: 205px;
+    height: 205px;
+    border: 5px solid darkgray;
+    background-color: lightgray;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
