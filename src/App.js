@@ -1,11 +1,12 @@
 import './App.css';
 import Playground from './components/Playground';
 import CheeseButton from './components/CheeseButton';
-
+import { useSelector } from 'react-redux';
 function App() {
+  const mines = useSelector(state => state.mines.amountOfMines);
   return (
     <div>
-      <h1>Mines: <span className="mines-count"></span></h1>
+      <h1>Mines: <span className="mines-count">{mines}</span></h1>
       <Playground />
       <br />
       <CheeseButton />
