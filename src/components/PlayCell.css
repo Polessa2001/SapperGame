@@ -21,24 +21,27 @@
 .cell-cheese-clicked {
   background: rgb(112, 110, 110);
 }
+.cell-bomb {
+  background: rgb(55, 40, 0);
+}
+.x0 {
+  background: rgb(236, 232, 232);
+}
 .x1 {
-  color: blue;
+  color: rgb(255, 226, 80);
 }
 .x2 {
-  color: green;
+  color: rgb(218, 150, 16);
 }
 .x3 {
-  color: red;
+  color: rgb(233, 119, 5);
 }
 .x4 {
-  color: rgb(166, 0, 255);
+  color: rgb(225, 12, 8);
 }
 .x5 {
-  color: rgb(255, 242, 0);
+  color: rgb(104, 48, 2);
 }
 .x6 {
-  color: rgb(66, 171, 144);
-}
-.x7 {
-  color: rgb(0, 0, 0);
+  color: rgb(104, 48, 2);
 }

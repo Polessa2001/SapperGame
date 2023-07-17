@@ -16,6 +16,7 @@ const gameSlice = createSlice({
   }
 });
 
+
 // CHEESE BUTTON PART //
 
 const initialCheeseButtonState = {
@@ -32,28 +33,39 @@ const cheeseSlice = createSlice({
   }
 });
 
-// MINES PART //
 
 const initialMinesState = {
-  amountOfMines: 5,
-  minesLocation: ["2-2"]
+  amountOfMines: 7,
+  minesLocation: ["2-1","2-2","5-2","6-4","4-2","2-1","3-3"],
+  bombIsFound: false,
+  minesLeft: 7,
 }
 const minesSlice = createSlice({
   name: 'mines',
   initialState: initialMinesState,
   reducers: {
     setMines(state) {
-      state.minesLocation.push("2-2");
-      state.minesLocation.push("2-3");
-      state.minesLocation.push("5-6");
-      state.minesLocation.push("3-4");
-      state.minesLocation.push("1-1");
+      while (state.minesLeft > 0) {
+        let r = Math.floor(Math.random() * 8);
+        let c = Math.floor(Math.random() * 8);
+        let id = r.toString() + "-" - c.toString();
+        if (!state.minesLocation.includes(id)) {
+          state.minesLocation.push(id);
+          state.minesLeft -= 1;
+        }
+      }
     },
+
     decrementMines(state) {
       state.amountOfMines--;
     },
+
     incrementMines(state) {
       state.amountOfMines++;
+    },
+
+    revealMines(state) {
+      state.bombIsFound = true;
     }
   }
 })
@@ -64,7 +76,7 @@ const store = configureStore({
   reducer: {
     cheese: cheeseSlice.reducer,
     mines: minesSlice.reducer,
-    game: gameSlice.reducer
+    game: gameSlice.reducer,
   }
 });
 

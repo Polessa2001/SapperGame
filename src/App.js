@@ -6,7 +6,7 @@ function App() {
   const mines = useSelector(state => state.mines.amountOfMines);
   return (
     <div>
-      <h1>Mines: <span className="mines-count">{mines}</span></h1>
+      <h1>Mouse Traps: <span className="mines-count">{mines}</span></h1>
       <Playground />
       <br />
       <CheeseButton />
