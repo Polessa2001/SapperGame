@@ -20,7 +20,8 @@ const Playground = () => {
     }
     return newBoard;
   }
-  const [minesState, setMinesState] = useState({});
+
+  const [minesCountMap, setMinesCountMap] = useState({});
 
   const checkMineHandler = (id, checkTile) => {
     // Access the key of the clicked cell from the parent component
@@ -30,6 +31,8 @@ const Playground = () => {
     if (row < 0 || row >= rows || col < 0 || col >= columns) {
       return;
     }
+
+    let minesCount = 0;
 
     const neighbors = [
       { row: row - 1, col: col - 1 },
@@ -41,19 +44,21 @@ const Playground = () => {
       { row: row + 1, col },
       { row: row + 1, col: col + 1 },
     ];
-    const minesCountMap = {};
-    let minesCount = 0;
+    let sumMinesCount = 0;
 
     for (const neighbor of neighbors) {
       const neighborId = `${neighbor.row}-${neighbor.col}`;
-      minesCount += checkTile(neighbor.row, neighbor.col);
+      minesCount = checkTile(neighbor.row, neighbor.col);
       if (minesCount > 0) {
-        minesCountMap[neighborId] = minesCount;
         console.log(neighborId);
+        // updatedMinesCountMap[neighborId] = minesCount;
+        sumMinesCount += minesCount;
       }
     }
-    // console.log('Mines Count:', minesCount);
-    setMinesState(prevState => ({ ...prevState, ...minesCountMap }));
+    const updatedMinesCountMap = { ...minesCountMap, [id]: sumMinesCount };
+    setMinesCountMap(updatedMinesCountMap); // Update the minesCountMap state with the updated map
+    console.log('Sum of Mines Count:', sumMinesCount);
+    console.log(updatedMinesCountMap);
   };
 
   const executeFunctionInCell = (r, c) => {
@@ -76,7 +81,7 @@ const Playground = () => {
             id={element}
             onCellClick={checkMineHandler}
             checkTile={executeFunctionInCell}
-            minesFound={minesState[element] || 0}
+            minesFound={minesCountMap[element] || 0}
           >
           </PlayCell>
         ))

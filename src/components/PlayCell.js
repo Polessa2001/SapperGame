@@ -8,14 +8,16 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
   const cheese = useSelector(state => state.cheese.cheeseIsActive);
   const bombIsFound = useSelector(state => state.mines.bombIsFound);
   const initialMinesState = useSelector(state => state.mines);
+  const [isClicked, setIsClicked] = useState(false);
   const [hasBomb, setHasBomb] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const oneCell = useRef(null);
+
   useEffect(() => {
     if (initialMinesState.minesLocation.includes(id)) {
       setHasBomb(true);
     }
-  }, [initialMinesState.minesLocation]);
+  }, [initialMinesState.minesLocation, id]);
 
   const dispatch = useDispatch();
 
@@ -30,22 +32,25 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
   };
 
   const setClickHandler = () => {
+    setIsClicked(true)
     if (initialMinesState.minesLocation.includes(id)) {
       dispatch(minesActions.revealMines());
       dispatch(gameActions.failGame());
     } else {
       onCellClick(id, checkTile);
-      console.log(minesFound);
-      if (oneCell.current) {
-        if (minesFound > 0) {
-          oneCell.current.innerHTML = minesFound;
-          oneCell.current.classList.add(`x${minesFound}`);
-        } else {
-          oneCell.current.classList.add('x0');
-        }
-      }
     }
   };
+
+  useEffect(() => {
+    if (oneCell.current && isClicked && !hasBomb) {
+      if (minesFound > 0) {
+        oneCell.current.innerHTML = minesFound;
+        oneCell.current.classList.add(`x${minesFound}`);
+      } else {
+        oneCell.current.classList.add('x0');
+      }
+    }
+  }, [minesFound, isClicked, hasBomb]);
 
   const handleClick = () => {
     if (cheese) {
