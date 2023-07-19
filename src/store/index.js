@@ -4,6 +4,7 @@ const startGame = {
   rows: 8,
   columns: 8,
   gameOver: false,
+  isOpen: 0,
 }
 const gameSlice = createSlice({
   name: 'game',
@@ -12,6 +13,16 @@ const gameSlice = createSlice({
     failGame(state) {
       state.gameOver = !state.gameOver;
       alert("GAME OVER");
+    },
+
+    incrementIsOpen(state) {
+      state.isOpen++;
+    },
+    resetGame(state) {
+      state.rows = startGame.rows;
+      state.columns = startGame.columns;
+      state.gameOver = startGame.gameOver;
+      state.isOpen = startGame.isOpen;
     }
   }
 });
@@ -32,7 +43,6 @@ const cheeseSlice = createSlice({
     }
   }
 });
-
 
 const initialMinesState = {
   amountOfMines: 7,

@@ -4,7 +4,7 @@ import { gameActions } from '../store/index';
 import { minesActions } from '../store/index';
 import './PlayCell.css';
 
-const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
+const PlayCell = ({ id, onCellClick, checkTile, minesFound, cellContainsX0, openMine }) => {
   const cheese = useSelector(state => state.cheese.cheeseIsActive);
   const bombIsFound = useSelector(state => state.mines.bombIsFound);
   const initialMinesState = useSelector(state => state.mines);
@@ -12,14 +12,13 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
   const [hasBomb, setHasBomb] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const oneCell = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (initialMinesState.minesLocation.includes(id)) {
       setHasBomb(true);
     }
   }, [initialMinesState.minesLocation, id]);
-
-  const dispatch = useDispatch();
 
   const setTileHandler = () => {
     setIsActive(!isActive);
@@ -32,7 +31,14 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
   };
 
   const setClickHandler = () => {
-    setIsClicked(true)
+    setIsClicked(true);
+
+    if (isClicked) {
+      return;
+    }
+    // dispatch(gameActions.incrementIsOpen());
+    // console.log(tileIsOpen);
+
     if (initialMinesState.minesLocation.includes(id)) {
       dispatch(minesActions.revealMines());
       dispatch(gameActions.failGame());
@@ -41,16 +47,25 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
     }
   };
 
+  if (openMine && !isClicked) {
+    setIsClicked(true);
+    oneCell.current.classList.add('x0');
+  }
+
   useEffect(() => {
     if (oneCell.current && isClicked && !hasBomb) {
       if (minesFound > 0) {
         oneCell.current.innerHTML = minesFound;
-        oneCell.current.classList.add(`x${minesFound}`);
+        oneCell.current.classList.add(`x${minesFound.toString()}`);
       } else {
         oneCell.current.classList.add('x0');
+        oneCell.current.innerHTML = null;
+        if (oneCell.current.classList.contains('x0')) {
+          // Pass the information to the parent component
+          onCellClick(id, checkTile, true);
+        }
       }
-    }
-  }, [minesFound, isClicked, hasBomb]);
+    }},[oneCell, isClicked, hasBomb]);
 
   const handleClick = () => {
     if (cheese) {
@@ -66,6 +81,7 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound }) => {
       className={`playcell ${isActive ? 'cell-cheese-clicked' : ''} ${bombIsFound && hasBomb ? 'cell-bomb' : ''}`}
       onClick={handleClick}
     >
+      {openMine && null}
       {isActive && '🧀'}
       {bombIsFound && hasBomb && '🪤'}
     </div>

@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlayCell from './PlayCell';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { gameActions } from '../store/index';
 import './Playground.css';
 
 const Playground = () => {
   const rows = useSelector(state => state.game.rows);
   const columns = useSelector(state => state.game.columns);
   const initialMinesState = useSelector(state => state.mines);
+  const tileIsOpen = useSelector(state => state.game.isOpen);
+  const playerGained = useSelector(state => state.game.gain);
+  const gameIsOver = useSelector(state => state.game.gameOver);
   const newBoard = [];
-
+  console.log(tileIsOpen);
   function startGame() {
     for (let r = 0; r < rows; r++) {
       let row = [];
@@ -22,8 +26,19 @@ const Playground = () => {
   }
 
   const [minesCountMap, setMinesCountMap] = useState({});
+  const [minesOpenAround, setMinesOpenAround] = useState({});
+  const dispatch = useDispatch();
 
-  const checkMineHandler = (id, checkTile) => {
+  useEffect(() => {
+    if (tileIsOpen === 58 && !gameIsOver) {
+      const playAgain = window.confirm("You WON! Wanna play again?");
+      if (playAgain) {
+        dispatch(gameActions.resetGame());
+      }
+    }
+  }, [playerGained, tileIsOpen]);
+
+  const checkMineHandler = (id, checkTile, cellContainsX0) => {
     // Access the key of the clicked cell from the parent component
     console.log(`Clicked cell ID: ${id}`);
 
@@ -32,8 +47,12 @@ const Playground = () => {
       return;
     }
 
-    let minesCount = 0;
+    if (cellContainsX0) {
+      dispatch(gameActions.incrementIsOpen());
+      return;
+    }
 
+    let minesCount = 0;
     const neighbors = [
       { row: row - 1, col: col - 1 },
       { row: row - 1, col },
@@ -47,19 +66,30 @@ const Playground = () => {
     let sumMinesCount = 0;
 
     for (const neighbor of neighbors) {
-      const neighborId = `${neighbor.row}-${neighbor.col}`;
       minesCount = checkTile(neighbor.row, neighbor.col);
       if (minesCount > 0) {
-        console.log(neighborId);
         // updatedMinesCountMap[neighborId] = minesCount;
         sumMinesCount += minesCount;
       }
     }
-    const updatedMinesCountMap = { ...minesCountMap, [id]: sumMinesCount };
-    setMinesCountMap(updatedMinesCountMap); // Update the minesCountMap state with the updated map
-    console.log('Sum of Mines Count:', sumMinesCount);
-    console.log(updatedMinesCountMap);
+    if (sumMinesCount === 0) {
+      let updatedOpenAround = { ...minesOpenAround };
+      for (const neighbor of neighbors) {
+        const neighborRow = neighbor.row;
+        const neighborCol = neighbor.col;
+        const neighborId = `${neighborRow}-${neighborCol}`;
+        updatedOpenAround = { ...updatedOpenAround, [neighborId]: true };
+        // console.log('Sum of Empty Cells:', updatedOpenAround);
+      }
+      setMinesOpenAround(updatedOpenAround);
+    } else {
+      const updatedMinesCountMap = { ...minesCountMap, [id]: sumMinesCount };
+      setMinesCountMap(updatedMinesCountMap);
+      dispatch(gameActions.incrementIsOpen());
+      // console.log('Sum of Mines Count:', updatedMinesCountMap);
+    }
   };
+
 
   const executeFunctionInCell = (r, c) => {
     // Function to execute in the cell component
@@ -74,16 +104,17 @@ const Playground = () => {
 
   return (
     <div className="playground">
-      {startGame().map((row) =>
-        row.map((element) => (
+      {startGame().map(row =>
+        row.map(element => (
           <PlayCell
             key={element}
             id={element}
             onCellClick={checkMineHandler}
             checkTile={executeFunctionInCell}
+            openMine={minesOpenAround[element] || false}
             minesFound={minesCountMap[element] || 0}
-          >
-          </PlayCell>
+            cellContainsX0={minesCountMap[element] === 0}
+          />
         ))
       )}
     </div>
