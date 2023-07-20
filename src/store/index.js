@@ -5,6 +5,7 @@ const startGame = {
   columns: 8,
   gameOver: false,
   isOpen: 0,
+  resetdata: false
 }
 const gameSlice = createSlice({
   name: 'game',
@@ -23,6 +24,7 @@ const gameSlice = createSlice({
       state.columns = startGame.columns;
       state.gameOver = startGame.gameOver;
       state.isOpen = startGame.isOpen;
+      state.resetData = !startGame.resetData;
     }
   }
 });
@@ -46,26 +48,28 @@ const cheeseSlice = createSlice({
 
 const initialMinesState = {
   amountOfMines: 7,
-  minesLocation: ["2-1","2-2","5-2","6-4","4-2","2-1","3-3"],
+  minesLocation: [],
   bombIsFound: false,
   minesLeft: 7,
+  gameStarted:false,
 }
 const minesSlice = createSlice({
   name: 'mines',
   initialState: initialMinesState,
   reducers: {
-    setMines(state) {
+    setInitial(state) {
       while (state.minesLeft > 0) {
         let r = Math.floor(Math.random() * 8);
         let c = Math.floor(Math.random() * 8);
-        let id = r.toString() + "-" - c.toString();
+        let id = r.toString() + "-" + c.toString();
         if (!state.minesLocation.includes(id)) {
           state.minesLocation.push(id);
-          state.minesLeft -= 1;
+          state.minesLeft--;
         }
       }
+      state.amountOfMines = 7;
+      state.gameStarted = !state.gameStarted;
     },
-
     decrementMines(state) {
       state.amountOfMines--;
     },

@@ -11,29 +11,26 @@ const Playground = () => {
   const tileIsOpen = useSelector(state => state.game.isOpen);
   const playerGained = useSelector(state => state.game.gain);
   const gameIsOver = useSelector(state => state.game.gameOver);
-  const newBoard = [];
-  console.log(tileIsOpen);
-  function startGame() {
-    for (let r = 0; r < rows; r++) {
-      let row = [];
-      for (let c = 0; c < columns; c++) {
-        let id = `${r}-${c}`;
-        row.push(id);
-      }
-      newBoard.push(row);
-    }
-    return newBoard;
-  }
-
   const [minesCountMap, setMinesCountMap] = useState({});
-  const [minesOpenAround, setMinesOpenAround] = useState({});
+  const [minesOpenAround, setMinesOpenAround] = useState({}); // Store the state of revealed mines
   const dispatch = useDispatch();
+  const [resetTrigger, setResetTrigger] = useState(false);
+
+  // Initialize the minesOpenAround state when the component mounts
+  useEffect(() => {
+    const initialMinesOpenAround = {};
+    for (const mineLocation of initialMinesState.minesLocation) {
+      initialMinesOpenAround[mineLocation] = false;
+    }
+    setMinesOpenAround(initialMinesOpenAround);
+  }, [initialMinesState.minesLocation]);
 
   useEffect(() => {
     if (tileIsOpen === 58 && !gameIsOver) {
       const playAgain = window.confirm("You WON! Wanna play again?");
       if (playAgain) {
         dispatch(gameActions.resetGame());
+        setResetTrigger(true);
       }
     }
   }, [playerGained, tileIsOpen]);
@@ -68,7 +65,6 @@ const Playground = () => {
     for (const neighbor of neighbors) {
       minesCount = checkTile(neighbor.row, neighbor.col);
       if (minesCount > 0) {
-        // updatedMinesCountMap[neighborId] = minesCount;
         sumMinesCount += minesCount;
       }
     }
@@ -79,17 +75,14 @@ const Playground = () => {
         const neighborCol = neighbor.col;
         const neighborId = `${neighborRow}-${neighborCol}`;
         updatedOpenAround = { ...updatedOpenAround, [neighborId]: true };
-        // console.log('Sum of Empty Cells:', updatedOpenAround);
       }
       setMinesOpenAround(updatedOpenAround);
     } else {
       const updatedMinesCountMap = { ...minesCountMap, [id]: sumMinesCount };
       setMinesCountMap(updatedMinesCountMap);
       dispatch(gameActions.incrementIsOpen());
-      // console.log('Sum of Mines Count:', updatedMinesCountMap);
     }
   };
-
 
   const executeFunctionInCell = (r, c) => {
     // Function to execute in the cell component
@@ -104,18 +97,21 @@ const Playground = () => {
 
   return (
     <div className="playground">
-      {startGame().map(row =>
-        row.map(element => (
-          <PlayCell
-            key={element}
-            id={element}
-            onCellClick={checkMineHandler}
-            checkTile={executeFunctionInCell}
-            openMine={minesOpenAround[element] || false}
-            minesFound={minesCountMap[element] || 0}
-            cellContainsX0={minesCountMap[element] === 0}
-          />
-        ))
+      {Array.from({ length: rows }).map((_, r) =>
+        Array.from({ length: columns }).map((_, c) => {
+          const id = `${r}-${c}`;
+          return (
+            <PlayCell
+              key={id}
+              id={id}
+              onCellClick={checkMineHandler}
+              checkTile={executeFunctionInCell}
+              minesFound={minesCountMap[id] || 0}
+              cellContainsX0={minesCountMap[id] === 0}
+              openMine={minesOpenAround[id] || false} // Use minesOpenAround state directly
+            />
+          );
+        })
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 body {
+  background-color: rgb(46, 44, 44);
   display: flex;
   text-align: center;
   align-items: center;
@@ -6,5 +7,58 @@ body {
   font-family: Arial, Helvetica,sans-serif;
   font-weight: bold;
   margin: auto;
+  color:rgb(246, 201, 20);
   cursor: url('https://img.lovepik.com/free-png/20211117/lovepik-mouse-png-image_400982820_wh1200.png'), pointer;
+}
+.start {
+  width: 100px;
+  height: 60px;
+  font-size: 28px;
+  background-color: lightgray;
+  color: rgb(246, 201, 20);
+  transition: 0.2s;
+  border-radius: 10px;
+  margin-top: 24px;
+}
+.start:active {
+  background-color: rgb(140, 140, 140);
+}
+.start:hover {
+  background-color: rgb(140, 140, 140);
+}
+.rendering {
+  width: 410px;
+  height: 410px;
+  border: 10px solid darkgray;
+  background-color: lightgray;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color:  rgb(246, 201, 20);
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+.rendering img {
+  width:80%;
+  height: 80%;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 600px) {
+  .rendering {
+    width: 205px;
+    height: 205px;
+    border: 5px solid darkgray;
+    background-color: lightgray;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .rendering img {
+    width:80%;
+    height: 80%;
+    object-fit: cover;
+  }
 }
