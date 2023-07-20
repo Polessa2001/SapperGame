@@ -16,7 +16,6 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound, cellContainsX0, open
   const dispatch = useDispatch();
 
   const hasBomb = initialMinesState.minesLocation.includes(id);
-
   useEffect(() => {
     if (resetGame) {
       setIsActive(false);
@@ -44,7 +43,6 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound, cellContainsX0, open
     if (isClicked) {
       return;
     }
-
     if (initialMinesState.minesLocation.includes(id)) {
       dispatch(minesActions.revealMines());
       dispatch(minesActions.decrementMines());
@@ -53,7 +51,9 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound, cellContainsX0, open
       onCellClick(id, checkTile);
     }
   };
+  if (hasBomb && isActive) {
 
+  }
   useEffect(() => {
     if (oneCell.current && isClicked && !hasBomb) {
       if (minesFound > 0) {
@@ -83,8 +83,9 @@ const PlayCell = ({ id, onCellClick, checkTile, minesFound, cellContainsX0, open
       className={`playcell ${isActive ? 'cell-cheese-clicked' : ''} ${gameIsOver && hasBomb ? 'cell-bomb' : ''}`}
       onClick={handleClick}
     >
-      {isActive && '🧀'}
-      {gameIsOver && hasBomb && '🪤'}
+      {isActive && !gameIsOver &&'🧀'}
+      {((hasBomb && gameIsOver) && (isActive || !isActive )) && '🪤'}
+
     </div>
   );
 };

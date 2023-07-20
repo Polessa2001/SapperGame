@@ -31,7 +31,7 @@ function App() {
   const handleStartAgain = () => {
     dispatch(gameActions.resetGame());// Reset game state
     setShowPlayground(false); // Reset showPlayground state to hide Playground
-    dispatch(minesActions.setInitial()); // Reset mines
+    dispatch(minesActions.setInitial());// Reset mines
   };
 
   return (

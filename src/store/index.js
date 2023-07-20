@@ -80,7 +80,7 @@ const minesSlice = createSlice({
 
     revealMines(state) {
       state.bombIsFound = true;
-    }
+    },
   }
 })
 
