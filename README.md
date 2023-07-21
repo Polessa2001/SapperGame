@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+Introducing "Mouse Trapper" - a delightful and addictive mobile game that puts a twist on the classic Minesweeper concept. In this charming adventure, you step into the tiny paws of a cunning mouse who must navigate through a perilous maze filled with cleverly hidden mouse traps. But don't worry, you're not defenseless! Your quick wits and strategic thinking will guide you to success.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Gameplay is designed to be intuitive and straightforward, making it suitable for players of all ages. The simple yet captivating graphics transport you into a charming world where cute animations accompany your every move. React, HTML, and CSS are skillfully utilized to create a seamless and responsive gaming experience on your mobile device.
 
-## Available Scripts
+Features:
+🐭 Engaging Levels: Embark on a thrilling journey through various levels, each offering a unique and intricate maze to conquer.
 
-In the project directory, you can run:
+🧀 Cheese Markers: Strategically place cheese markers to remember where traps might be hidden, helping you avoid the dangerous spots.
 
-### `npm start`
+📱 Mobile-Optimized: Play on the go! Mouse Trapper is designed to work seamlessly on your mobile device, ensuring you can enjoy the game wherever you are.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🎯 Strategic Fun: Sharpen your logical thinking and problem-solving skills as you deduce the locations of the traps.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Whether you have a few minutes to spare or need a captivating game to unwind, Mouse Trapper is the perfect companion. Try the game now and let the maze exploration begin! Dodge those mouse traps, set your cheese markers, and embark on a thrilling adventure with the cleverest little mouse in the gaming world. Get ready to be hooked on Mouse Trapper!
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
+1 views
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
